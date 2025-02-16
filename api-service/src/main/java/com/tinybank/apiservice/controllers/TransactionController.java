@@ -3,6 +3,7 @@ package com.tinybank.apiservice.controllers;
 import com.tinybank.apiservice.helpers.TransactionHelper;
 import com.tinybank.apiservice.interfaces.ITransactionService;
 import com.tinybank.apiservice.mappers.TransactionMapper;
+import com.tinybank.apiservice.requests.TransactionRequest;
 import com.tinybank.apiservice.responses.TransactionHistoryDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,17 +35,17 @@ public class TransactionController {
 
     @Operation(summary = "Deposit", description = "Deposit money transaction.")
     @PostMapping("/deposit")
-    public ResponseEntity<String> deposit(@RequestBody double amount) {
+    public ResponseEntity<String> deposit(@RequestBody TransactionRequest request) {
 
-        this.transactionService.execute(TransactionHelper.createDepositTransaction(amount));
+        this.transactionService.execute(TransactionHelper.createDepositTransaction(request.getAmount()));
         return ResponseEntity.ok(transactionFinishMessage);
     }
 
     @Operation(summary = "Withdraw", description = "Withdraw money transaction.")
     @PostMapping("/withdraw")
-    public ResponseEntity<String> withdraw(@RequestBody double amount) {
+    public ResponseEntity<String> withdraw(@RequestBody TransactionRequest request) {
 
-        this.transactionService.execute(TransactionHelper.createWithdrawTransaction(amount));
+        this.transactionService.execute(TransactionHelper.createWithdrawTransaction(request.getAmount()));
         return ResponseEntity.ok(transactionFinishMessage);
     }
 }

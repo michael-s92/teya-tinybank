@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Random;
 
 @RestController
@@ -32,7 +34,11 @@ public class SetupController {
         var count = random.nextInt(2, 10);
 
         for (int i = 0; i < count; i++) {
-            var amount = random.nextDouble(100);
+            var amount = BigDecimal
+                    .valueOf(random.nextDouble(100))
+                    .setScale(2, RoundingMode.HALF_UP)
+                    .doubleValue();
+            
             Transaction txn;
             if(Math.round(amount) % 2 == 0) {
                 txn = TransactionHelper.createDepositTransaction(amount);
