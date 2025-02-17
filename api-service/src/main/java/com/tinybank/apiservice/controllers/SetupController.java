@@ -29,18 +29,15 @@ public class SetupController {
     }
 
     @Operation(summary = "Random Data Setup", description = "Publish random number of transaction in the system.")
-    @GetMapping("/random")
+    @GetMapping(value = "/random", produces = "application/json")
     public ResponseEntity<String> randomSetupInMemoryData() {
         var count = random.nextInt(2, 10);
 
         for (int i = 0; i < count; i++) {
-            var amount = BigDecimal
-                    .valueOf(random.nextDouble(100))
-                    .setScale(2, RoundingMode.HALF_UP)
-                    .doubleValue();
-            
+            var amount = random.nextInt(100);
+
             Transaction txn;
-            if(Math.round(amount) % 2 == 0) {
+            if(amount % 2 == 0) {
                 txn = TransactionHelper.createDepositTransaction(amount);
             } else {
                 txn = TransactionHelper.createWithdrawTransaction(amount);

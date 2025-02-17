@@ -34,7 +34,7 @@ public class TransactionController {
     }
 
     @Operation(summary = "Deposit", description = "Deposit money transaction.")
-    @PostMapping("/deposit")
+    @PostMapping(value = "/deposit", produces = "application/json")
     public ResponseEntity<String> deposit(@RequestBody TransactionRequest request) {
 
         this.transactionService.execute(TransactionHelper.createDepositTransaction(request.getAmount()));
@@ -42,7 +42,7 @@ public class TransactionController {
     }
 
     @Operation(summary = "Withdraw", description = "Withdraw money transaction.")
-    @PostMapping("/withdraw")
+    @PostMapping(value = "/withdraw", produces = "application/json")
     public ResponseEntity<String> withdraw(@RequestBody TransactionRequest request) {
 
         this.transactionService.execute(TransactionHelper.createWithdrawTransaction(request.getAmount()));

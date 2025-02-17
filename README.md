@@ -52,9 +52,39 @@ If you want to see the API documentation in a user-friendly UI, you can access S
 ## How to use API
 
 To get started with the API, first run a `GET` request to `http://localhost:8080/setup/random` to populate the in-memory data structures with some sample data. This will allow you to see something when you interact with the API.
-
+```bash
+   curl -X 'GET' \
+  'http://localhost:8080/setup/random' \
+  -H 'accept: application/json'
+```
 To check the current balance, you can make a `GET` request to `http://localhost:8080/balance/view`.
-
+```bash
+   curl -X 'GET' \
+  'http://localhost:8080/balance/view' \
+  -H 'accept: application/json'
+```
 To view the history of all executed transactions, simply make a `GET` request to `http://localhost:8080/transaction/history`.
-
+```bash
+   curl -X 'GET' \
+  'http://localhost:8080/transaction/history' \
+  -H 'accept: application/json'
+```
 If you’d like to perform a new transaction, you can send a `POST` request to either `http://localhost:8080/transaction/deposit` or `http://localhost:8080/transaction/withdraw`. For the request body, just include the amount for the transaction.
+```bash
+   curl -X 'POST' \
+  'http://localhost:8080/transaction/deposit' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "amount": VALUE
+}'
+```
+```bash
+   curl -X 'POST' \
+  'http://localhost:8080/transaction/withdraw' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "amount": VALUE
+}'
+```
