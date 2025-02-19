@@ -14,6 +14,8 @@ public final class TransactionDTO {
     @Schema(description = "The value of the transaction.", example = "15,67")
     private double amount;
 
+    private String datetime;
+
     public TransactionDTO(String type, double amount) {
         this.type = type;
         this.amount = amount;
@@ -33,5 +35,13 @@ public final class TransactionDTO {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getDatetime() {
+        return datetime;
+    }
+
+    public void setDatetime(String datetime) {
+        this.datetime = datetime;
     }
 }

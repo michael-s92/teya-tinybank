@@ -5,11 +5,15 @@ import com.tinybank.apiservice.interfaces.ITransactionService;
 import com.tinybank.apiservice.mappers.TransactionMapper;
 import com.tinybank.apiservice.requests.TransactionRequest;
 import com.tinybank.apiservice.responses.TransactionHistoryDTO;
+import com.tinybank.apiservice.responses.TransactionUpToDateDTO;
+import com.tinybank.entities.TransactionUpToDate;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/transaction")
@@ -47,5 +51,13 @@ public class TransactionController {
 
         this.transactionService.execute(TransactionHelper.createWithdrawTransaction(request.getAmount()));
         return ResponseEntity.ok(transactionFinishMessage);
+    }
+
+    @Operation(summary = "View Transaction History", description = "Get list of all transactions.")
+    @GetMapping(value = "/history/{datetime}", produces = "application/json")
+    public ResponseEntity<TransactionUpToDateDTO> getTransactionHistoryUpToDate(@PathVariable final LocalDateTime datetime){
+
+        TransactionUpToDate response = this.transactionService.getHistoryUpToDate(datetime);
+        return ResponseEntity.ok(TransactionMapper.toUpToHistoryDTO(response));
     }
 }
